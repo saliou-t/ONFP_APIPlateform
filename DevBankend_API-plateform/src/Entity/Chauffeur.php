@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\ChauffeurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ChauffeurRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=ChauffeurRepository::class)
  */
+
+#[ApiResource()]  
 class Chauffeur
 {
     /**
@@ -31,6 +36,16 @@ class Chauffeur
      * @ORM\Column(type="integer", nullable=true)
      */
     private $note;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Voiture::class, mappedBy="chauffeur")
+     */
+    private $voitures;
+
+    public function __construct()
+    {
+        $this->voitures = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +84,36 @@ class Chauffeur
     public function setNote(?int $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Voiture[]
+     */
+    public function getVoitures(): Collection
+    {
+        return $this->voitures;
+    }
+
+    public function addVoiture(Voiture $voiture): self
+    {
+        if (!$this->voitures->contains($voiture)) {
+            $this->voitures[] = $voiture;
+            $voiture->setChauffeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoiture(Voiture $voiture): self
+    {
+        if ($this->voitures->removeElement($voiture)) {
+            // set the owning side to null (unless already changed)
+            if ($voiture->getChauffeur() === $this) {
+                $voiture->setChauffeur(null);
+            }
+        }
 
         return $this;
     }
