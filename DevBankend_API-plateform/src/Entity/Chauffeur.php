@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ChauffeurRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ChauffeurRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=ChauffeurRepository::class)
  */
+
+#[ApiResource()]  
 class Chauffeur
 {
     /**
