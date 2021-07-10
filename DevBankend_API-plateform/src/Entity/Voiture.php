@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\VoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VoitureRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=VoitureRepository::class)
  */
+#[ApiResource()]  
+
 class Voiture
 {
     /**
@@ -46,6 +49,11 @@ class Voiture
      * @ORM\Column(type="integer", nullable=true)
      */
     private $pneu_secours;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Chauffeur::class, inversedBy="voitures")
+     */
+    private $chauffeur;
 
     public function getId(): ?int
     {
@@ -120,6 +128,18 @@ class Voiture
     public function setPneuSecours(?int $pneu_secours): self
     {
         $this->pneu_secours = $pneu_secours;
+
+        return $this;
+    }
+
+    public function getChauffeur(): ?Chauffeur
+    {
+        return $this->chauffeur;
+    }
+
+    public function setChauffeur(?Chauffeur $chauffeur): self
+    {
+        $this->chauffeur = $chauffeur;
 
         return $this;
     }
