@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Chauffeur{% endblock %}
+
+{% block body %}
+    <h1>Créer un nouveau chauffeur</h1>
+
+    {{ include('chauffeur/_form.html.twig') }}
+
+    <a  class="btn btn-warning" href="{{ path('chauffeur_index') }}">Voir les chauffeurs</a>
+{% endblock %}

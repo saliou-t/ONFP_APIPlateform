@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chauffeur index{% endblock %}
+
+{% block body %}
+    <h1>Liste des chauffeurs</h1>
+
+    <table class="table border">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Permis</th>
+                <th>Cni</th>
+                <th>Note</th>
+                <th>Editer</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chauffeur in chauffeurs %}
+            <tr>
+                <td>{{ chauffeur.id }}</td>
+                <td>{{ chauffeur.permis }}</td>
+                <td>{{ chauffeur.cni }}</td>
+                <td>{{ chauffeur.note }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('chauffeur_show', {'id': chauffeur.id}) }}">show</a>
+                </td>
+                 <td>
+                    <a class="btn btn-info" href="{{ path('chauffeur_edit', {'id': chauffeur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-warning" href="{{ path('chauffeur_new') }}">Ajouter un nouveau chauffeur</a>
+{% endblock %}
