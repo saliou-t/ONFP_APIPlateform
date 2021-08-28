@@ -9,7 +9,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=VoitureRepository::class)
  */
-#[ApiResource()]  
+// #[ApiResource()]  
 
 class Voiture
 {
